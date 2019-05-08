@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" " http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.company.shopingram.persistence.ContentMapper">
+	<resultMap type="com.company.shopingram.domain.dto.ContentDTO" id="content">
+		<id property="contentCode" column="contents_code" jdbcType="VARCHAR"/>
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<id property="contentsText" column="contents_text" jdbcType="VARCHAR"/>
+		<id property="contentImg" column="contents_img" jdbcType="VARCHAR"/>
+		<id property="contentsVideo" column="contents_video" jdbcType="VARCHAR"/>
+		<id property="contentsdate" column="contents_date" jdbcType="TIMESTAMP"/>
+		<id property="contentsHidden" column="contents_hidden" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="columns">
+		contents_code, member_id, contents_text, contents_img, contents_video, contents_date, contents_hidden
+		<!-- date_format(regdate,'%Y-%m-%d %H:%i:%S') as regdate_str 오라클엔 적용안될수도;;-->
+	</sql>
+	
+	<select id="loadContentList" resultMap="content">
+		SELECT * FROM contents_tb
+	</select>
+	
+	<insert id="addContentImg" >
+		INSERT INTO contents_tb VALUES(#{contentCode},#{memberId},#{contentsText},#{contentImg}, #{contentsVideo}, #{contentsDate}, #{contentsHidden})
+	</insert>
+	
+	<update id="updateContentTextByContentCode">
+		UPDATE contents_tb SET contents_text=#{contentsText} where contents_code=#{contentCode}
+	</update>
+	
+	<update id="updateContentHidden">
+		UPDATE contents_tb SET contents_hidden=#{contentsHidden} where contents_code=#{contentCode}
+	</update>
+	
+	<select id="searchContentByContentCode" resultMap="content">
+		SELECT * FROM contents_tb where contents_code=#{contentCode}
+	</select>
+	
+	<select id="searchContentByCodeAndId" resultMap="content">
+		SELECT * FROM contents_tb where contents_code=#{contentCode} AND member_id=#{memberId}
+	</select>
+	
+	<select id="searchContentByMemberId" resultMap="content">
+		SELECT * FROM contents_tb where member_Id=#{memberId}
+	</select>
+	
+	<delete id="deleteContent">
+		DELETE FROM contents_tb where contents_code=#{contentCode} AND member_id=#{memberId}
+	</delete>
+	
+	<select id="searchContentText" resultMap="content">
+		SELECT * FROM contents_tb where contents_text LIKE'%${contentsText}%'
+	</select>
+
+	<!--  
+	<update id="updateContentText">
+		UPDATE contents_tb set contents_text=#{contentsText} WHERE contents_code=#{contentCode}
+	</update>
+	
+	
+	
+	
+	 <sql id="search">
+		<where>
+          	<if test="searchType != null">
+          		<if test="searchType =='t'.toString()">
+				 AND title LIKE '%${keyword}%'
+          		</if>
+			</if>
+			
+			
+          	<if test="searchType != null">
+          		<if test="searchType =='c'.toString()">
+				 AND content LIKE '%${keyword}%'
+          		</if>
+			</if>
+			
+			
+          	<if test="searchType != null">
+          		<if test="searchType =='w'.toString()">
+				 AND writer LIKE '%${keyword}%'
+          		</if>
+			</if>
+			
+			
+          	<if test="searchType != null">
+          		<if test="searchType =='tc'.toString()">
+				 AND (title LIKE '%${keyword}%') OR content LIKE '%${keyword}%'
+          		</if>
+			</if>
+			
+			<if test="searchType != null">
+          		<if test="searchType =='cw'.toString()">
+				 AND (content LIKE '%${keyword}%') OR writer LIKE '%${keyword}%'
+          		</if>
+			</if>
+			
+			<if test="searchType != null">
+          		<if test="searchType =='tcw'.toString()">
+				 AND (title LIKE '%${keyword}%' 
+				OR content LIKE '%${keyword}%'
+				OR writer LIKE '%${keyword}%')
+          		</if>
+			</if>
+		</where>
+	
+	</sql>
+	
+	<insert id="create">
+	insert into tbl_board(bno,title,content,writer,filename,filesize,oldname, regdate) 
+	values(myfirst_seq.nextval,#{title},#{content},#{writer},#{filename},#{filesize},#{oldname},SYSDATE)
+	
+	</insert>
+	my_board.nextval
+	<select id="read" resultMap="board">
+		select <include refid="columns"/>
+			bno, title, content, writer, regdate, viewcnt
+		from
+			tbl_board
+		where bno=#{bno}
+	</select>
+	
+	<update id="update">
+		update tbl_board set title=#{title}, content=#{content}, writer=#{writer},
+		filename=#{filename}, filesize=#{filesize}, oldname=#{oldname} 
+		where bno=#{bno}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+	
+	<select id="listAll" resultMap="board">
+		select <include refid="columns"/>
+		from
+		tbl_board
+		where bno >0
+		order by bno desc, regdate desc
+	</select>
+	
+	<select  id="readList" parameterType="Integer" resultMap="board"> 
+		SELECT
+			<include refid="columns"/> 
+		FROM ( select /*+ FIRST_ROWS(10) */ 
+         a.<include refid="columns"/>, ROWNUM rnum 
+       	FROM
+         (SELECT <include refid="columns"/> FROM tbl_board order by bno DESC) a
+       	WHERE
+         ROWNUM &lt;= #{pageNum} * 10)
+		WHERE
+ 		 rnum  &gt;= (#{pageNum} -1) * 10 + 1
+	</select>
+	
+	<select  id="listCriteria"  resultMap="board"> 
+		SELECT
+			<include refid="columns"/> 
+		FROM ( select /*+ FIRST_ROWS(10) */ 
+         a.<include refid="columns"/>, ROWNUM rnum 
+       	FROM
+         (SELECT <include refid="columns"/> FROM tbl_board order by bno DESC) a
+       	WHERE
+         ROWNUM &lt;= #{page} * #{perPageNum})
+		WHERE
+ 		 rnum  &gt;= (#{page} -1) * #{perPageNum} + 1
+	</select>
+	
+	
+	<select id="readIndex" resultType="Integer">
+		SELECT 
+			LAST_NUMBER 
+		FROM 
+			USER_SEQUENCES   
+		WHERE 
+			SEQUENCE_NAME = UPPER('id_seq')
+	</select>
+	
+	<select id="searchByCondition" parameterType="map" resultMap="board">
+		SELECT
+			<include refid="columns"/> 
+		FROM ( select /*+ FIRST_ROWS(10) */ 
+         a.<include refid="columns"/>, ROWNUM rnum 
+       	FROM
+         (SELECT <include refid="columns"/> FROM tbl_board 
+          <where>
+          	<if test="title != null">
+				AND title LIKE '%${keyword}%'
+			</if>
+			<if test="content != null">
+				AND content LIKE '%${keyword}%'
+			</if>
+			<if test="writer != null">
+				AND writer LIKE '%${keyword}%'
+			</if>
+          </where>
+         ORDER BY bno DESC) a
+       	WHERE
+         ROWNUM &lt;= #{pageNum} * 10)
+		WHERE
+ 		 rnum  &gt;= (#{pageNum} -1) * 10 + 1
+
+	</select>
+	
+	<select id="countPaging" resultType="int">
+		select
+			count(bno)
+		from
+			tbl_board
+		where
+			bno>0	
+	</select>
+	
+	<select id="listSearch" resultMap="board">
+			SELECT
+			<include refid="columns"/> 
+		FROM ( select  
+         a.<include refid="columns"/>, ROWNUM rnum 
+       	FROM
+         (SELECT <include refid="columns"/> FROM tbl_board 
+         <include refid="search"></include>
+         order by bno DESC) a
+       	WHERE
+         ROWNUM &lt;= #{page} * #{perPageNum})
+		WHERE
+ 		 rnum  &gt;= (#{page} -1) * #{perPageNum} + 1
+	</select>
+	
+	<select id="listSearchCount" resultType="int">
+		select count(bno)
+		from tbl_board
+		 <include refid="search"></include>
+	</select> -->
+	
+	
+	
+</mapper>

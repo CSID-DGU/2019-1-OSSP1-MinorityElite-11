@@ -1,0 +1,146 @@
+.outer{
+  		width:1000px;
+  		min-width:1000px;
+  		height:650px;
+		background-color:#fff;
+  	}	
+  	.logo{
+  		float:left;
+  		display : inline-block;
+  		padding-left:40px;
+  		padding-top:120px;
+  		width:495px;
+  		height:640px;
+  	}
+  	.loginerror{
+  		margin-left:120px;
+  		color:blue;
+  	}
+  	.login{
+  		display:inline-block;
+  		width:504px;
+  		height:650px;
+  		margin-left:1px;
+  		background-color:pink;
+  		margin-bottom:30px;
+  	}
+  	.find_layer{
+  		margin-top:40px;
+  		margin-left:30px;
+  	}
+  	.login_btn{
+  		margin-top:25px;
+  		margin-left:160px;
+  	}
+  	.logoImage{
+  		display:inline-block;
+  		width:200px;
+  		height:200px;
+  		margin-left:5px;
+  		margin-top:5px;
+  		text-align:center;
+  		
+  	}
+  	.selluvLogo{
+  		width:50px;
+  		height:50px;
+  	}
+  	.form-id{
+  		display:inline-block;
+  		width:480px;
+  		height:100px;
+  		padding-left:100px;
+  		padding-top:30px;
+  	}
+  	.form-pwd{
+  		display:inline-block;
+  		width:480px;
+  		height:100px;
+  		padding-left:100px;
+  		padding-top:20px;
+  	}
+  	.form-name{
+  		display:inline-block;
+  		width:480px;
+  		height:100px;
+  		padding-left:100px;
+  		padding-top:30px;
+  	}
+  	
+  	.form-mail{
+  		display:inline-block;
+  		width:480px;
+  		height:90px;
+  		padding-left:100px;
+  		padding-top:10px;
+  	}
+  	
+  	.form-phone{
+  		display:inline-block;
+  		width:480px;
+  		height:100px;
+  		padding-left:100px;
+  	}
+  	.selluvText{
+  		position:relative;
+  		margin-top:75px;
+  	}
+  	
+  	.title{
+  		height:100px;
+  		margin-left:140px;
+  		margin-top:26px;
+  	}
+  	
+  	.register{
+  		display:inline-block;
+  		margin-left:220px;
+  	}
+  	body {
+	background-color: #f1f1f1;
+	font-family: Helvetica,Arial,Verdana;
+
+}
+	h1 {
+	color: green;
+	text-align: center;
+	}
+	.redfamily {
+		color: red;	
+	}
+.search-box,.close-icon,.search-wrapper {
+	position: relative;
+	padding: 10px;
+}
+.search-wrapper {
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+}
+.search-box {
+	width: 80%;
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 15px;
+}
+.search-box:focus {
+	box-shadow: 0 0 15px 5px #b0e0ee;
+	border: 2px solid #bebede;
+}
+
+.search-box:not(:valid) ~ .close-icon {
+	display: none;
+}
+
+.loginBottom{
+	margin-top:30px;
+}
+  	
+a.searchId{
+	margin-top:10px;
+	margin-left:120px;
+}
+a.searchPwd{
+	margin-top:10px;
+	margin-left:25px;
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" " http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.shopingram.persistence.MemberMapper">
+	<resultMap id="member" type="com.company.shopingram.domain.dto.MemberDTO">
+		<id property="memberId" column="member_id" jdbcType="VARCHAR"/>
+		<result property="pwd" column="member_pwd" jdbcType="VARCHAR"/>
+		<result property="name" column="member_name" jdbcType="VARCHAR"/>
+		<result property="mail" column="member_mail" jdbcType="VARCHAR"/>
+		<result property="addr" column="member_addr" jdbcType="VARCHAR"/>
+		<result property="rangeCode" column="range_code" jdbcType="VARCHAR"/>
+		<result property="phone" column="member_phone" jdbcType="VARCHAR"/>
+		<result property="levelCode" column="level_code" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<insert id="addMember" parameterType="com.company.shopingram.domain.dto.MemberDTO">
+		INSERT INTO member_tb
+		(member_id, member_pwd, member_name, member_mail, member_addr, range_code, member_phone, level_code)
+		VALUES(#{ memberId }, #{ pwd }, #{ name }, #{ mail }, #{ addr }, #{ rangeCode }, #{ phone }, #{ levelCode })
+	</insert>
+	
+	<delete id="deleteMember" parameterType="com.company.shopingram.domain.dto.MemberDTO">
+		DELETE FROM member_tb WHERE member_id = #{ memberId } AND member_pwd=#{pwd}
+	</delete>
+	
+	<select id="searchMemberByName" parameterType="String" resultMap="member">
+		SELECT * FROM member_tb WHERE member_name = #{ member_name }
+	</select>
+	
+	<select id="searchMemberById" parameterType="String" resultMap="member">
+		SELECT * FROM member_tb WHERE member_id = #{ member_id }
+	</select>
+	
+	<select id="searchMemberByIdAndPwd" parameterType="map" resultMap="member">
+		SELECT * FROM member_tb WHERE member_id = #{ member_id } AND member_pwd = #{ member_pwd }
+	</select>
+	
+	<select id="searchMemberId" parameterType="String" resultType="String">
+		SELECT member_id FROM member_tb WHERE member_mail=#{ member_mail }
+	</select>
+	
+	<select id="searchMemberPwd" parameterType="map" resultType="String">
+		SELECT member_pwd FROM member_tb WHERE member_id=#{member_id} AND member_mail=#{member_mail}
+	</select>
+	
+	<update id="updateMember" parameterType="com.company.shopingram.domain.dto.MemberDTO">
+		UPDATE member_tb SET member_pwd=#{pwd}, member_name=#{name}, member_mail=#{mail}, member_addr=#{addr}, range_code=#{rangeCode}, member_phone=#{phone}, level_code=#{levelCode}	
+		WHERE member_id=#{member_id}
+	</update>
+	
+	<update id="updateMemberLevelCode" parameterType="map">
+		UPDATE member_tb SET level_code=#{ level_code } WHERE member_id=#{ member_id } AND member_pwd=#{ member_pwd }
+	</update>
+	
+	<update id="updateMemberRangeCode" parameterType="map">
+		UPDATE member_tb SET range_code=#{ range_code } WHERE member_id=#{member_id} AND member_pwd=#{ member_pwd }
+	</update>
+	
+	<update id="updateMemberPwd" parameterType="map">
+		UPDATE member_tb SET member_pwd=#{ newPwd } WHERE member_id=#{memberId} AND member_pwd=#{pwd}
+	</update>
+</mapper>

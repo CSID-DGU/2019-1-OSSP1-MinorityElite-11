@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.company.shopingram.persistence.MemberPeedViewMapper">
+
+ <resultMap type="com.company.shopingram.domain.vo.MemberPeedViewVO" id="memberPeedView">
+	 	<id property="memberId" column="member_id" jdbcType="VARCHAR" />
+	 	<id property="memberName" column="member_name" jdbcType="VARCHAR" />
+	 	<id property="levelName" column="level_name" jdbcType="VARCHAR" />
+	 	<id property="profileImg" column="profile_img" jdbcType="VARCHAR" />
+	 	<id property="profileIntro" column="PROFILE_INTRO" jdbcType="VARCHAR" />
+	 	<id property="profileWebsite" column="PROFILE_WEBSITE" jdbcType="VARCHAR" />
+	 </resultMap>
+	 
+	  <select id="searchMemberPeedView" parameterType="com.company.shopingram.domain.vo.MemberPeedViewVO" resultMap="memberPeedView">
+		SELECT * 
+		FROM member_peed_view 
+		WHERE member_id = #{memberId}
+	 </select>
+
+</mapper>
