@@ -114,4 +114,19 @@
         }
     }
   }
+  .sellerform-container{
+    margin-top: 0;
+    .sellerform-list{
+      .sellerform-add{
+        .sellerform-link{
+          border: 1px solid #fff;
+          display: inline-block;
+          width: 293px;
+          height: 293px;
+          background-size: 293px 293px;
+          background-image: url('~@assets/image/form_image.png');
+        }
+      }
+    }
+  }
 }

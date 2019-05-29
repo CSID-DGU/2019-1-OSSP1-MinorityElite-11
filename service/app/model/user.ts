@@ -11,7 +11,7 @@ module.exports = app => {
       mobile: STRING(32),
       prefix: STRING(32),
       abstract:  {type: STRING(255), allowNull: true},
-      sex: {type: STRING(2), defaultValue: '남'}, 
+      sex: {type: STRING(2), defaultValue: 'M'}, 
       created_at: {type: DATE, defaultValue: NOW},
       updated_at: {type: DATE, defaultValue: NOW},
       businessman: STRING(12)

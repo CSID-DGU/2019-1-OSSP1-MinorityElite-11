@@ -239,8 +239,8 @@ class RegistrationForm extends React.Component {
                         initialValue: userInfo.sex
                     })(
                         <Select>
-                            <Option value="남">남</Option>
-                            <Option value="여">여</Option>
+                            <Option value="M">남</Option>
+                            <Option value="W">여</Option>
                         </Select>
                     )}
                     </FormItem>
