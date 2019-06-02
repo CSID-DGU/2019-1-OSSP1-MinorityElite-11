@@ -34,14 +34,13 @@ class PostTopic extends React.Component {
     }
 
     state = {
-        uploadStatus: 0, // 0: 默认占位图 1: inputUrl 状态 2: 选择照片状态
+        uploadStatus: 0, 
         imageList: [],
         showInputNotice: true,
         inputUrl: '',
         topicDescript: ''
     }
 
-    // 更改图片输入状态
     changeUploadStatus =  (status) => {
         this.setState({
             uploadStatus: status,
@@ -49,7 +48,6 @@ class PostTopic extends React.Component {
         })
     }
 
-    // 改变展示输入框提示
     changeInpurUrlStatus = () => {
         this.setState({
             showInputNotice: !this.state.showInputNotice,
@@ -57,7 +55,6 @@ class PostTopic extends React.Component {
         })
     }
 
-    // 关闭输入网络图片
     closeInputUrl = () => {
         let imgLength = this.state.imageList.length
         if (imgLength === 0) {
@@ -71,17 +68,14 @@ class PostTopic extends React.Component {
         }
     }
 
-    // 双向绑定
     handelChange = (value) => {
         this.setState({ inputUrl: value })
     }
 
-    // 双向绑定textarea
     handelChangeTextArea = (event) => {
         this.setState({ topicDescript: event.target.value })
     }
 
-    // 从列表中去除图片
     delectPhoto = (index) => {
         this.setState({
             imageList:  this.state.imageList.filter((_, i) => i !== index)
@@ -97,7 +91,6 @@ class PostTopic extends React.Component {
         console.log(this.state.imageList)
     }
 
-    // 添加网络图片
     pushImgUrl = (event) => {
         if (event.key === 'Enter') {
             let url = event.target.value
@@ -106,14 +99,12 @@ class PostTopic extends React.Component {
             img.crossorigin = 'anonymous';
             img.src = url;
 
-            // 图片无效
             img.onerror = () => {
                 notification['error']({
                     message: '올바른 이미지 주소를 입력하십시오.'
                 })
             };
 
-            // 图片有效
             img.onload = () => {
 
                 if (this.state.imageList.length === 0) {
@@ -129,7 +120,6 @@ class PostTopic extends React.Component {
         }
     }
 
-    // 发帖
     postTopic = async () => {
         if (this.state.imageList.length === 0) { 
             notification['error']({
@@ -145,7 +135,6 @@ class PostTopic extends React.Component {
         notification['success']({
             message: resposne.message
         });
-        // 关闭发帖弹窗
 
         this.props.togglePostTopic(true)
     }
@@ -228,7 +217,6 @@ class PostTopic extends React.Component {
                         ""
                     }
 
-                    {/* 上次占位图 */}
                     <div className="upload-style">
                         <UploadPlaceholder />
                     </div>
