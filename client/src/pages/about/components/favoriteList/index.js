@@ -3,6 +3,7 @@ import { Icon } from 'antd';
 import Style from './index.scss'
 import TopicDialog from '@components/topicDialog'
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
 
 
 @connect(
@@ -33,12 +34,12 @@ class FavoriteList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            active: false,
             hasData: false
         }
     }
 
     showDialog = (item, topicIndex) => {
-        // 显示弹窗内容
         TopicDialog.open({
             ...item,
             topicIndex,
@@ -47,15 +48,42 @@ class FavoriteList extends React.Component {
         });
     }
 
+    setActiveFalse () {
+        this.setState({'active': false});
+    }
+
+    setActiveTrue () {
+        this.setState({'active': true});
+    }
+
     render() {
+        let {userInfo} = this.props
         return (
             <main>
                 <div className={Style['favorite-list']}>
                     <ul className="favorite-nav">
-                    <li className="active"><i className="topic"></i>帖子</li>
-                    <li><i className="collect"></i>收藏夹</li>
+                        <li 
+                            className={`${this.state.active?'' : 'active'}`}
+                            onClick={this.setActiveFalse.bind(this)} ><i className="topic"></i>Content</li>
+                        {   
+                            userInfo.businessman?
+                            <li className={`${this.state.active?'active' : ''}`}
+                                onClick={this.setActiveTrue.bind(this)}
+                            ><i className="collect"></i>Form</li>
+                            : ''
+                        }
                     </ul>
-                    <section className="favorite-container">
+                    {
+                        this.state.active?
+                        <section className="sellerform-container">
+                            <ul className="sellerform-list">
+                                <li className="sellerform-add">
+                                    <Link className="sellerform-link" to={'/formedit'}></Link>
+                                </li>
+                            </ul>
+                        </section>
+                        :
+                        <section className="favorite-container">
                     {
                         this.props.topicList.length >0 ?
                         <div className="descript">
@@ -89,11 +117,12 @@ class FavoriteList extends React.Component {
                         <div  className="descript">
                             <div className="no-more">
                                 <Icon  className="no-more-icon" type="linkedin" />
-                                <span className="notice">没有帖子</span>
+                                <span className="notice">게시물 없음</span>
                             </div>
                         </div>
                     }
                     </section>
+                    }
                 </div>
             </main>
         )

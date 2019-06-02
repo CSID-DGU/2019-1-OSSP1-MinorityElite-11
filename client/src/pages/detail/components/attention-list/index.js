@@ -29,7 +29,7 @@ class AttenTionList extends React.Component {
                 <ul className="list">
                     {
                         followList.length === 0?
-                        <li>天啊噜，目前居然没有可关注的人，快来成为第一个发帖人吧</li>
+                        <li>첫번째 팔로워가 되세요.</li>
                         :
                         followList.map((item, index) => {
                             return (
@@ -37,8 +37,8 @@ class AttenTionList extends React.Component {
                                     <Avatar userInfo={item} avatarStyle={avatarStyle} />
                                     {
                                         item.hasFollow
-                                            ? <Button onClick={() => { this.props.setFollowStatus(index, false) }}>已关注</Button>
-                                            : <Button type="primary" onClick={() => {this.props.setFollowStatus(index, true)}}>关注</Button>
+                                            ? <Button onClick={() => { this.props.setFollowStatus(index, false) }}>팔로우</Button>
+                                            : <Button type="primary" onClick={() => {this.props.setFollowStatus(index, true)}}>팔로우 취소</Button>
                                     }
                                 </li>
                             )

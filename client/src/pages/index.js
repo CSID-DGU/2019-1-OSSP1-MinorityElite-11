@@ -11,6 +11,7 @@ import About from './about/index'
 import NotFoundPage from './404/index'
 import Accounts from './accounts'
 import Search from './search'
+import SellForm from './SellForm'
 import { connect } from "react-redux";
 
 
@@ -37,6 +38,7 @@ class Intagram extends React.Component {
                     <Route path="/accounts" component={Accounts}/>
                     <Route path="/search/:content" component={Search}/>
                     <Route path="/search" component={Search}/>
+                    <Route path="/formedit" component={SellForm}/>
                     <Route component={NotFoundPage} />
                 </Switch>
             </Router>
