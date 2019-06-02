@@ -4,7 +4,7 @@ const pump = require('mz-modules/pump');
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage({
   projectId: 'My First Project',
-  keyFilename: 'config/My First Project-14b55a6edafc.json'
+  keyFilename: 'config/My_First_Project-14b55a6edafc.json'
 });
 const format = require('util').format;
 
@@ -53,10 +53,8 @@ class TopicController extends Controller {
         const {topicId, replyContent} = ctx.request.body
 
         let userId = ctx.user.userId
-        // 获取并填充数据
         let user = await this.service.user.getUserByUserId(userId)
 
-        // 新帖子
         let newDiscuss = {
             topicId: topicId,
             replyContent: replyContent,
@@ -66,8 +64,8 @@ class TopicController extends Controller {
 
         let discuss: any =  await ctx.service.topic.insertDiscuss(newDiscuss)
         
-        discuss && ctx.returnBody(200, "评论成功")
-        !discuss && ctx.returnBody(400, "网络异常请稍后重试")
+        discuss && ctx.returnBody(200, "댓글등록 성공")
+        !discuss && ctx.returnBody(400, "네트워크 오류. 다시 시도하세요.")
     }
 
 
@@ -77,7 +75,7 @@ class TopicController extends Controller {
 
         let topicDetail = await ctx.service.topic.topicDetailHanderl(topicId)
         
-        ctx.returnBody(200, "成功", topicDetail)
+        ctx.returnBody(200, "성공", topicDetail)
     }
 
     public async friendsTopicList () {
@@ -109,7 +107,7 @@ class TopicController extends Controller {
             topicList.push(item)
         }
 
-        topicList && ctx.returnBody(200, "成功", topicList)
+        topicList && ctx.returnBody(200, "성공", topicList)
     }
 
     public async putLikeTopic () {
@@ -152,7 +150,7 @@ class TopicController extends Controller {
             topicList.push(item)
         }
 
-        this.ctx.returnBody(200, "成功", topicList)
+        this.ctx.returnBody(200, "성공", topicList)
     }
 
 
