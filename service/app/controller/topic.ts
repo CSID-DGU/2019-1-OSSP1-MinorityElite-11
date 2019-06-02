@@ -44,7 +44,7 @@ class TopicController extends Controller {
 
         await ctx.service.topic.insertTopic(newTopic)
         
-        ctx.returnBody(200, "发帖成功")
+        ctx.returnBody(200, "게시글 등록 성공")
     }
 
 

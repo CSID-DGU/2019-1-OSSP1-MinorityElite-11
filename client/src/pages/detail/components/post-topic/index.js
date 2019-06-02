@@ -6,7 +6,6 @@ import Avatar from '@components/avatar'
 import Carousel from '@components/carousel'
 import { notification} from 'antd';
 import API from '@common/api.js'
-import Upload from '@components/upload'
 import DefaultUpload from '@components/uploadFile'
 
 
@@ -110,7 +109,7 @@ class PostTopic extends React.Component {
             // 图片无效
             img.onerror = () => {
                 notification['error']({
-                    message: '请输入正确图片地址'
+                    message: '올바른 이미지 주소를 입력하십시오.'
                 })
             };
 
