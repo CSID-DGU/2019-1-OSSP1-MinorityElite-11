@@ -4,6 +4,7 @@ import Style from './index.scss'
 import TopicDialog from '@components/topicDialog'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
+import API from '@common/api.js'
 
 
 @connect(
@@ -35,8 +36,10 @@ class FavoriteList extends React.Component {
         super(props);
         this.state = {
             active: false,
-            hasData: false
+            hasData: false,
+            showPostForm: false
         }
+        this.initFormList()
     }
 
     showDialog = (item, topicIndex) => {
@@ -54,6 +57,22 @@ class FavoriteList extends React.Component {
 
     setActiveTrue () {
         this.setState({'active': true});
+    }
+
+    async initFormList () {
+        const formResponse = await API.getFormList();
+        console.log('formResponse',formResponse);
+    }
+
+    togglePostForm = (refresh) => {
+        this.setState({
+            showPostForm: !this.state.showPostForm
+        })
+        
+        if (refresh) {
+            this.initFormList()
+        }
+
     }
 
     render() {
@@ -78,7 +97,12 @@ class FavoriteList extends React.Component {
                         <section className="sellerform-container">
                             <ul className="sellerform-list">
                                 <li className="sellerform-add">
-                                    <Link className="sellerform-link" to={'/formedit'}></Link>
+                                    <Link className="sellerform-link" to={'/formedit'}></Link>                
+                                    {
+                                        this.state.showPostForm?
+                                        <div className="sellform-contents">"form title"</div>               
+                                        : ''
+                                    }
                                 </li>
                             </ul>
                         </section>

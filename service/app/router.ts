@@ -3,7 +3,7 @@ import { Application, Router } from 'egg';
 
 export default (app: Application) => {
   const { controller } = app;
-  const { user, topic, handle, friend, login } = controller;
+  const { user, topic, handle, friend, login, form } = controller;
   
   const apiV2Router: Router = app.router.namespace('/api/v2');
     // login 
@@ -19,7 +19,12 @@ export default (app: Application) => {
 
 
     // handle
-    apiV2Router.post('/handle/upload/get-token', handle.getQiniuToken);
+    apiV2Router.post('/handle', handle.getQiniuToken);
+
+    
+    // form
+    apiV2Router.post('/form', form.addForm);
+    apiV2Router.get('/form/list', form.getFormList)
 
 
     // friend

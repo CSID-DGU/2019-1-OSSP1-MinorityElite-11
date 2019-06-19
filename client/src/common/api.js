@@ -69,3 +69,12 @@ exports.followUser = (data) => {
 exports.getToken = (data) => {
     return instance.post('/handle/upload/get-token', data);
 }
+
+
+exports.addForm = (data) =>{
+    return instance.post('/form', data);
+}
+
+exports.getFormList = (data) =>{
+    return instance.get('/form/list', data);
+}
